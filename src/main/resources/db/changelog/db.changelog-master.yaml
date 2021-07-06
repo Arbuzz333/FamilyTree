@@ -1,0 +1,5 @@
+databaseChangeLog:
+ - include:
+     file: "/db/changelog/create-base-tables.yaml"
+ - include:
+     file: "/db/changelog/insert-into-tables.yaml"

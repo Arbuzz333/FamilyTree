@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 111
+      author: avahidov
+      changes:
+        - createTable:
+            tableName: person_family
+            columns:
+              - column:
+                  name: passport
+                  type: BIGINT
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: second_name
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parent
+                  type: BIGINT[]
+              - column:
+                  name: children
+                  type: BIGINT[]
+              - column:
+                  name: live
+                  type: boolean

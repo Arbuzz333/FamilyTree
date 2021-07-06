@@ -1,0 +1,101 @@
+databaseChangeLog:
+  - changeSet:
+      id: 112
+      author: avahidov
+      changes:
+        - insert:
+            tableName: person_family
+            columns:
+              - column:
+                  name: passport
+                  value: 10001000
+              - column:
+                  name: name
+                  value: Ivanov
+              - column:
+                  name: second_name
+                  value: Ivanovich
+              - column:
+                  name: parent
+                  value: '{10001001, 20001001}'
+              - column:
+                  name: children
+                  value: '{10011000, 10021000}'
+              - column:
+                  name: live
+                  value: true
+  - changeSet:
+      id: 113
+      author: avahidov
+      changes:
+        - insert:
+            tableName: person_family
+            columns:
+              - column:
+                  name: passport
+                  value: 10011000
+              - column:
+                  name: name
+                  value: Aleksey
+              - column:
+                  name: second_name
+                  value: Ivanovich
+              - column:
+                  name: parent
+                  value: '{10001000, 10002000}'
+              - column:
+                  name: children
+                  value: '{10111000, 10211000}'
+              - column:
+                  name: live
+                  value: true
+  - changeSet:
+      id: 114
+      author: avahidov
+      changes:
+        - insert:
+            tableName: person_family
+            columns:
+              - column:
+                  name: passport
+                  value: 10021000
+              - column:
+                  name: name
+                  value: Andrey
+              - column:
+                  name: second_name
+                  value: Ivanovich
+              - column:
+                  name: parent
+                  value: '{10001000, 10002000}'
+              - column:
+                  name: children
+                  value: '{10121000}'
+              - column:
+                  name: live
+                  value: true
+  - changeSet:
+      id: 115
+      author: avahidov
+      changes:
+        - insert:
+            tableName: person_family
+            columns:
+              - column:
+                  name: passport
+                  value: 10111000
+              - column:
+                  name: name
+                  value: Anton
+              - column:
+                  name: second_name
+                  value: Alekseych
+              - column:
+                  name: parent
+                  value: '{10011000}'
+              - column:
+                  name: children
+                  value: '{ 11111000, 12111000 }'
+              - column:
+                  name: live
+                  value: true
