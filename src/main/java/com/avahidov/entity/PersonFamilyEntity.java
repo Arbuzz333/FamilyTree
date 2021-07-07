@@ -19,7 +19,7 @@ public class PersonFamilyEntity {
     private Long[] children;
     private Boolean live;
 
-    protected PersonFamilyEntity() {
+    public PersonFamilyEntity() {
     }
 
     @Id

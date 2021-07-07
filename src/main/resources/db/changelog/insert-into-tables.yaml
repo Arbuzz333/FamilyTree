@@ -199,3 +199,50 @@ databaseChangeLog:
               - column:
                   name: live
                   value: true
+  - changeSet:
+      id: 120
+      author: avahidov
+      changes:
+        - insert:
+            tableName: person_family
+            columns:
+              - column:
+                  name: passport
+                  value: 10001111
+              - column:
+                  name: name
+                  value: Timur
+              - column:
+                  name: second_name
+                  value: Ivanovich
+              - column:
+                  name: children
+                  value: '{ 10001011 }'
+              - column:
+                  name: live
+                  value: false
+  - changeSet:
+      id: 121
+      author: avahidov
+      changes:
+        - insert:
+            tableName: person_family
+            columns:
+              - column:
+                  name: passport
+                  value: 10001211
+              - column:
+                  name: name
+                  value: Dana
+              - column:
+                  name: second_name
+                  value: Mihaelavna
+              - column:
+                  name: parent
+                  value: '{10001005}'
+              - column:
+                  name: children
+                  value: '{ 10001011 }'
+              - column:
+                  name: live
+                  value: false

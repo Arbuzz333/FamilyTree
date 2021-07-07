@@ -43,7 +43,7 @@ public class CustomIntegerArrayType implements UserType {
     @Override
     public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
         if (value != null && st != null) {
-            Array array = session.connection().createArrayOf("long", (Long[])value);
+            Array array = session.connection().createArrayOf("int8", (Long[])value);
             st.setArray(index, array);
         } else {
             st.setNull(index, sqlTypes()[0]);

@@ -1,5 +1,8 @@
 package com.avahidov.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,13 +10,19 @@ import java.util.Set;
 import java.util.TreeSet;
 
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class FamilyPersonDto implements Comparable<FamilyPersonDto> {
 
+    @NotNull
     private Long passport;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String secondName;
+
+    private Boolean live;
 
     private List<FamilyPersonDto> parent = new ArrayList<>();
     private Set<FamilyPersonDto> sisterBrother = new TreeSet<>();
@@ -64,6 +73,14 @@ public class FamilyPersonDto implements Comparable<FamilyPersonDto> {
 
     public void setSisterBrother(Set<FamilyPersonDto> sisterBrother) {
         this.sisterBrother = sisterBrother;
+    }
+
+    public Boolean getLive() {
+        return live;
+    }
+
+    public void setLive(Boolean live) {
+        this.live = live;
     }
 
     @Override
