@@ -66,16 +66,13 @@ public class FamilyControllerTest {
                 new TreeSet<>(), Arrays.asList(dtoChild_1, dtoChild_2, dtoChild_3));
 
         ResponseEntity<HttpStatus> statusEntity = template.postForEntity(base.toString() + "/add-person", dto, HttpStatus.class);
-
         assertThat(statusEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         dto.setParent(Collections.singletonList(dtoParent_3));
         HttpEntity<FamilyPersonDto> updateHttp = new HttpEntity(dto);
         ResponseEntity<HttpStatus> httpStatusUpdateEntity = template.exchange(base.toString() + "/update-person",
                 HttpMethod.PUT, updateHttp, HttpStatus.class);
-
         assertThat(httpStatusUpdateEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-
 
         HttpEntity<FamilyPersonDto> deleteHttp = new HttpEntity(dto.getPassport());
         ResponseEntity<HttpStatus> httpStatusDeleteEntity = template.exchange(base.toString() + "/delete-person",
