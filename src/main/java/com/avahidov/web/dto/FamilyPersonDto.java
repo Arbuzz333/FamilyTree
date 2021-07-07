@@ -1,9 +1,13 @@
 package com.avahidov.web.dto;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 
-public class FamilyPersonDto {
+public class FamilyPersonDto implements Comparable<FamilyPersonDto> {
 
     private Long passport;
 
@@ -11,16 +15,16 @@ public class FamilyPersonDto {
 
     private String secondName;
 
-    private List<FamilyPersonDto> parent;
-    private List<FamilyPersonDto> sisterBrother;
-    private List<FamilyPersonDto> children;
+    private List<FamilyPersonDto> parent = new ArrayList<>();
+    private Set<FamilyPersonDto> sisterBrother = new TreeSet<>();
+    private List<FamilyPersonDto> children = new ArrayList<>();
 
     public FamilyPersonDto() {
     }
 
     public FamilyPersonDto(Long passport, String name, String secondName,
                            List<FamilyPersonDto> parent,
-                           List<FamilyPersonDto> sisterBrother,
+                           Set<FamilyPersonDto> sisterBrother,
                            List<FamilyPersonDto> children) {
         this.passport = passport;
         this.name = name;
@@ -50,11 +54,33 @@ public class FamilyPersonDto {
         this.parent = parent;
     }
 
-    public List<FamilyPersonDto> getSisterBrother() {
+    public Set<FamilyPersonDto> getSisterBrother() {
         return sisterBrother;
     }
 
     public List<FamilyPersonDto> getChildren() {
         return children;
+    }
+
+    public void setSisterBrother(Set<FamilyPersonDto> sisterBrother) {
+        this.sisterBrother = sisterBrother;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FamilyPersonDto dto = (FamilyPersonDto) o;
+        return passport.equals(dto.passport) && name.equals(dto.name) && secondName.equals(dto.secondName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(passport, name, secondName);
+    }
+
+    @Override
+    public int compareTo(FamilyPersonDto dto) {
+        return this.passport.compareTo(dto.passport);
     }
 }

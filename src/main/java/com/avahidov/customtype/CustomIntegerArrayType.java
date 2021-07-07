@@ -43,7 +43,7 @@ public class CustomIntegerArrayType implements UserType {
     @Override
     public void nullSafeSet(PreparedStatement st, Object value, int index, SharedSessionContractImplementor session) throws HibernateException, SQLException {
         if (value != null && st != null) {
-            Array array = session.connection().createArrayOf("int", (Integer[])value);
+            Array array = session.connection().createArrayOf("long", (Long[])value);
             st.setArray(index, array);
         } else {
             st.setNull(index, sqlTypes()[0]);
@@ -52,7 +52,7 @@ public class CustomIntegerArrayType implements UserType {
 
     @Override
     public Object deepCopy(Object value) throws HibernateException {
-        return value == null ? null : ((int[]) value).clone();
+        return value == null ? null : ((Long[]) value).clone();
     }
 
     @Override

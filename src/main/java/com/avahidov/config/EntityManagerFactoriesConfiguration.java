@@ -21,7 +21,7 @@ public class EntityManagerFactoriesConfiguration {
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSourceHikari);
-        em.setPackagesToScan("avahidov.entities");
+        em.setPackagesToScan("com.avahidov.entity");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

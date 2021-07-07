@@ -5,20 +5,22 @@ import org.hibernate.annotations.Type;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "person_family", schema = "public", catalog = "postgres")
+@Table(name = "person_family")
 public class PersonFamilyEntity {
     private long passport;
     private String name;
     private String secondName;
-    private Integer[] parent;
-    private Integer[] children;
+    private Long[] parent;
+    private Long[] children;
     private Boolean live;
+
+    protected PersonFamilyEntity() {
+    }
 
     @Id
     @Column(name = "passport")
@@ -53,22 +55,22 @@ public class PersonFamilyEntity {
     @Basic
     @Column(name = "parent", columnDefinition = "int[]")
     @Type(type = "com.avahidov.customtype.CustomIntegerArrayType")
-    public Integer[] getParent() {
+    public Long[] getParent() {
         return parent;
     }
 
-    public void setParent(Integer[] parent) {
+    public void setParent(Long[] parent) {
         this.parent = parent;
     }
 
     @Basic
     @Column(name = "children", columnDefinition = "int[]")
     @Type(type = "com.avahidov.customtype.CustomIntegerArrayType")
-    public Integer[] getChildren() {
+    public Long[] getChildren() {
         return children;
     }
 
-    public void setChildren(Integer[] children) {
+    public void setChildren(Long[] children) {
         this.children = children;
     }
 
