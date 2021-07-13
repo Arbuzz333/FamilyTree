@@ -7,13 +7,13 @@ import com.avahidov.web.dto.FamilyPersonDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 
 @Service
@@ -27,19 +27,19 @@ public class FamilyPersonServiceImpl implements FamilyPersonService {
 
     @Override
     public FamilyPersonDto getPersonTreeDto(long id) {
-        FamilyPersonDto dto = new FamilyPersonDto();
+        FamilyPersonDto dto = new FamilyPersonDto(id, "", "");
         Optional<PersonFamilyEntity> optional = repository.findByPassportAndLiveTrue(id);
 
         if (optional.isPresent()) {
             PersonFamilyEntity person = optional.get();
             dto = mapFromEntity(person);
-            Long[] parents = person.getParent();
+            long[] parents = person.getParent();
             if (parents != null) {
                 findParent(parents, dto);
-                Set<FamilyPersonDto> sisterBrotherDto = findSisterBrother(parents, person.getPassport());
+                TreeSet<FamilyPersonDto> sisterBrotherDto = findSisterBrother(parents, person.getPassport());
                 dto.setSisterBrother(sisterBrotherDto);
             }
-            Long[] children = person.getChildren();
+            long[] children = person.getChildren();
             if (children != null) {
                 findChildren(children, dto);
             }
@@ -69,7 +69,7 @@ public class FamilyPersonServiceImpl implements FamilyPersonService {
             var entity = optional.get();
             recordEntity(dto, entity);
         } else {
-            throw new NotFoundPersonException(dto.getPassport().toString());
+            throw new NotFoundPersonException(String.valueOf(dto.getPassport()));
         }
     }
 
@@ -80,55 +80,62 @@ public class FamilyPersonServiceImpl implements FamilyPersonService {
         entity.setLive(dto.getLive());
         List<FamilyPersonDto> parentList = dto.getParent();
         if (parentList != null && !parentList.isEmpty()) {
-            Long[] longs = parentList.stream()
+            long[] longs = parentList.stream()
                     .map(FamilyPersonDto::getPassport)
-                    .toArray(Long[]::new);
+                    .mapToLong(p -> p)
+                    .toArray();
             entity.setParent(longs);
         }
         List<FamilyPersonDto> childrenList = dto.getChildren();
         if (childrenList != null && !childrenList.isEmpty()) {
-            Long[] longs = childrenList.stream()
+            long[] longs = childrenList.stream()
                     .map(FamilyPersonDto::getPassport)
-                    .toArray(Long[]::new);
+                    .mapToLong(p -> p)
+                    .toArray();
             entity.setChildren(longs);
         }
     }
 
-    private void findParent(Long[] parents, FamilyPersonDto dto) {
-        List<Long> longs = new ArrayList<>(Arrays.asList(parents));
+    private void findParent(long[] parents, FamilyPersonDto dto) {
+        List<Long> longs = LongStream.of(parents)
+                .boxed()
+                .collect(Collectors.toList());
         List<PersonFamilyEntity> entityParentList = repository.findAllByPassportInAndLiveTrue(longs);
         for (PersonFamilyEntity entity : entityParentList) {
             FamilyPersonDto parentDto = mapFromEntity(entity);
             dto.getParent().add(parentDto);
-            Long[] parentGrand = entity.getParent();
+            long[] parentGrand = entity.getParent();
             if (parentGrand != null) {
                 findParent(parentGrand, parentDto);
             }
         }
     }
 
-    private void findChildren(Long[] children, FamilyPersonDto dto) {
-        List<Long> longs = new ArrayList<>(Arrays.asList(children));
+    private void findChildren(long[] children, FamilyPersonDto dto) {
+        List<Long> longs = LongStream.of(children)
+                .boxed()
+                .collect(Collectors.toList());
         List<PersonFamilyEntity> entityChildrenList = repository.findAllByPassportInAndLiveTrue(longs);
         for (PersonFamilyEntity entity : entityChildrenList) {
             FamilyPersonDto parentDto = mapFromEntity(entity);
             dto.getChildren().add(parentDto);
-            Long[] childGrand = entity.getChildren();
+            long[] childGrand = entity.getChildren();
             if (childGrand != null) {
                 findChildren(childGrand, parentDto);
             }
         }
     }
 
-    private Set<FamilyPersonDto> findSisterBrother(Long[] parents, Long passport) {
-        Set<FamilyPersonDto> childrenDto = new TreeSet<>();
+    private TreeSet<FamilyPersonDto> findSisterBrother(long[] parents, Long passport) {
+        TreeSet<FamilyPersonDto> childrenDto = new TreeSet<>();
         for (Long idParent : parents) {
             Optional<PersonFamilyEntity> optionalParent = repository.findByPassportAndLiveTrue(idParent);
             if (optionalParent.isPresent()) {
                 PersonFamilyEntity entityParent = optionalParent.get();
-                Long[] childrenArray = entityParent.getChildren();
+                long[] childrenArray = entityParent.getChildren();
                 List<Long> longs = Arrays.stream(childrenArray)
-                        .filter(l -> !l.equals(passport))
+                        .filter(l -> l != passport)
+                        .boxed()
                         .collect(Collectors.toList());
                 List<PersonFamilyEntity> entityChildList = repository.findAllByPassportInAndLiveTrue(longs);
                 Set<FamilyPersonDto> dtoSet = entityChildList.stream()
@@ -141,8 +148,7 @@ public class FamilyPersonServiceImpl implements FamilyPersonService {
     }
 
     private FamilyPersonDto mapFromEntity(PersonFamilyEntity entity) {
-        FamilyPersonDto dto = new FamilyPersonDto(entity.getPassport(), entity.getName(), entity.getSecondName(),
-                new ArrayList<>(), new TreeSet<>(), new ArrayList<>());
+        FamilyPersonDto dto = new FamilyPersonDto(entity.getPassport(), entity.getName(), entity.getSecondName());
         return dto;
     }
 }

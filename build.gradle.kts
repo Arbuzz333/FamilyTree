@@ -25,6 +25,8 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    // https://mvnrepository.com/artifact/javax.validation/validation-api
+    implementation("javax.validation:validation-api:2.0.1.Final")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
