@@ -8,13 +8,13 @@ import java.util.TreeSet
 
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-class FamilyPersonDto(val passport: Long, val name: String, val secondName: String): Comparable<FamilyPersonDto> {
+class FamilyPersonDto(val passport: Long, val name: String?, val secondName: String?): Comparable<FamilyPersonDto> {
 
     var live: Boolean? = null
 
-    lateinit var parent: ArrayList<FamilyPersonDto>
-    lateinit var sisterBrother: TreeSet<FamilyPersonDto>
-    lateinit var children: ArrayList<FamilyPersonDto>
+    var parent: ArrayList<FamilyPersonDto>? = ArrayList()
+    var sisterBrother: TreeSet<FamilyPersonDto>? = TreeSet()
+    var children: ArrayList<FamilyPersonDto>? = ArrayList()
 
     override fun
     equals(other: Any?): Boolean {
