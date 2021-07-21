@@ -1,4 +1,5 @@
 # FamilyTree
+ * находится в основном модуле
 ## FamilyController имеются 4 метода, которые соответственно обращаются через FamilyPersonService
 к методам PersonFamilyEntityRepository
 

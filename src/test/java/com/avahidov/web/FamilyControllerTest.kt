@@ -56,7 +56,7 @@ class FamilyControllerTest(
         val httpStatusUpdateEntity = template.exchange(
             "$base/update-person",
                 HttpMethod.PUT, updateHttp, HttpStatus::class.java)
-        assertThat(httpStatusUpdateEntity.getStatusCode()).isEqualTo(HttpStatus.OK)
+        assertThat(httpStatusUpdateEntity.statusCode).isEqualTo(HttpStatus.OK)
 
         val deleteHttp = HttpEntity(dto.passport)
         val httpStatusDeleteEntity = template.exchange(
