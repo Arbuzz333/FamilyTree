@@ -27,6 +27,11 @@ class PersonController(
         return service.getPersonDto(passport.toLong())
     }
 
+    @GetMapping("/list/{limit}")
+    fun getPersonList(@PathVariable limit: String ): List<PersonDto> {
+        return service.getPersonDtoList(limit.toInt())
+    }
+
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     fun addPerson(@Valid @RequestBody dto: PersonDto) {

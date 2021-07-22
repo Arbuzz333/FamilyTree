@@ -24,18 +24,23 @@ class PersonControllerTest(
     }
 
     @Test
-    fun getPerson() {
-        val responseEntity = template.getForEntity("$base/30003000", PersonDto::class.java)
-        val body = responseEntity.body
-        val dto = PersonDto(30003000, "NameFirst", "NameSecond", true)
-        assertThat(body).isEqualTo(dto)
+    fun getPersonList() {
+        val responseEntity = template.getForEntity("$base/list/100", List::class.java)
+        val list = responseEntity.body
+        assertThat(list?.isNotEmpty()).isTrue
     }
 
     @Test
-    fun addPerson() {
-        val dto = PersonDto(30003000, "NameFirst", "NameSecond", true)
+    fun addPersonAndGetPerson() {
+        val s = System.currentTimeMillis().toString()
+        val m = s.substring(s.length - 3, s.length)
+        val dto = PersonDto(30003000 + m.toLong(), "NameFirst$m", "NameSecond$m", true)
         val statusEntity = template.postForEntity("$base/add", dto, HttpStatus::class.java)
         assertThat(statusEntity.statusCode).isEqualTo(HttpStatus.CREATED)
+
+        val responseEntity = template.getForEntity("$base/${dto.passport}", PersonDto::class.java)
+        val body = responseEntity.body
+        assertThat(body).isEqualTo(dto)
     }
 
     @Test

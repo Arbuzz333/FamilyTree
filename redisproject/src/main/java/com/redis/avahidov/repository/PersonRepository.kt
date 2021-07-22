@@ -5,7 +5,7 @@ import com.redis.avahidov.model.Person
 
 interface PersonRepository {
 
-    fun findAllPerson(): MutableMap<Long, Person>
+    fun findAllPerson(limit: Int): Set<Person>
 
     fun add(person: Person)
 

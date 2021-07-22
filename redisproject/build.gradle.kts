@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation ("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("redis.clients:jedis:3.3.0")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

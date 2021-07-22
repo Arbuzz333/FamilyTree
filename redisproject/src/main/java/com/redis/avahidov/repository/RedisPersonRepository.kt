@@ -3,7 +3,9 @@ package com.redis.avahidov.repository
 import com.redis.avahidov.model.Person
 import org.springframework.data.redis.core.HashOperations
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.core.ScanOptions
 import org.springframework.stereotype.Repository
+import java.util.*
 import javax.annotation.PostConstruct
 
 
@@ -36,7 +38,13 @@ class RedisPersonRepository(
         add(person)
     }
 
-    override fun findAllPerson(): MutableMap<Long, Person> {
-        return hashOperations.entries(KEY)
+    override fun findAllPerson(limit: Int): Set<Person> {
+        val list = TreeSet<Person>()
+
+        val build = ScanOptions.ScanOptionsBuilder()
+        val scan = build.count(limit.toLong()).build()
+        val cursor = hashOperations.scan(KEY, scan)
+        cursor.iterator().forEach { list.add(it.value) }
+        return list
     }
 }

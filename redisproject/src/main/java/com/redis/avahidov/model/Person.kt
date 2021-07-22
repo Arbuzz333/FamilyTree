@@ -3,4 +3,14 @@ package com.redis.avahidov.model
 import java.io.Serializable
 
 
-data class Person(val passport: Long, val name: String, val secondName: String, val live: Boolean): Serializable
+class Person : Serializable, Comparable<Person> {
+
+    var passport: Long = 0
+    var name: String = ""
+    var secondName: String = ""
+    var live: Boolean = true
+
+    override fun compareTo(other: Person): Int {
+        return this.passport.compareTo(other.passport)
+    }
+}
