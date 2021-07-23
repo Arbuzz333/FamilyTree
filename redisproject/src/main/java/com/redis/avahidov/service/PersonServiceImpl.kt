@@ -14,7 +14,8 @@ class PersonServiceImpl(
 
     override fun getPersonDto(passport: Long): PersonDto {
         val person = repository.findPerson(passport)
-        return PersonDto(person.passport, person.name, person.secondName, person.live)
+        return PersonDto(person?.passport ?: -1, person?.name ?: "",
+            person?.secondName ?: "", person?.live ?: false)
     }
 
     override fun getPersonDtoList(limit: Int): List<PersonDto> {

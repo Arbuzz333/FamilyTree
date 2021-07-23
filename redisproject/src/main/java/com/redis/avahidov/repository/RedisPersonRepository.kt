@@ -30,8 +30,8 @@ class RedisPersonRepository(
         hashOperations.delete(KEY, passport)
     }
 
-    override fun findPerson(passport: Long): Person {
-        return hashOperations.get(KEY, passport) as Person
+    override fun findPerson(passport: Long): Person? {
+        return hashOperations.get(KEY, passport)
     }
 
     override fun update(person: Person) {

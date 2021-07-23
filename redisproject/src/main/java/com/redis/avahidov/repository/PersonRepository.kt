@@ -11,7 +11,7 @@ interface PersonRepository {
 
     fun delete(passport: Long)
 
-    fun findPerson(passport: Long): Person
+    fun findPerson(passport: Long): Person?
 
     fun update(person: Person)
 }
