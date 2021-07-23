@@ -45,6 +45,7 @@ class RedisPersonRepository(
         val scan = build.count(limit.toLong()).build()
         val cursor = hashOperations.scan(KEY, scan)
         cursor.iterator().forEach { list.add(it.value) }
+        cursor.close()
         return list
     }
 }
