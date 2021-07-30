@@ -1,5 +1,6 @@
 # Модуль реактивного web приложения
  * reactiver2dbc
+ * запрос списка http://localhost:8097/persons/list?limit=100
 # Модуль работы с REDIS
  * redisproject
 # FamilyTree

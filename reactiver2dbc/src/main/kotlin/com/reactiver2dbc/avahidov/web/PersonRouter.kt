@@ -24,7 +24,7 @@ class PersonRouter {
                     .and(accept(APPLICATION_JSON)), studentHandler::getPerson
             )
             .andRoute(
-                GET("/persons/list/{limit}")
+                GET("/persons/list")
                     .and(accept(APPLICATION_JSON)), studentHandler::getPersonList
             )
             .andRoute(

@@ -5,7 +5,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 
-@Table(value = "person_family")
+@Table(value = "person")
 class PersonEntity(
     passport: Long, name: String?, secondName: String?, live: Boolean?
 ) {
